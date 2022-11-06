@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import Header from "./Components/header";
+import QuestionsPage from "./Pages/QuestionsPage";
+import styled from "styled-components";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import AskPage from "./Pages/AskPage";
+import { createGlobalStyle } from "styled-components";
+import QuestionAnswerPage from "./Pages/QuestionAnswerPage";
+
+const StyledBody = styled.div`
+  background-color: #92bfdf;
+`
+
+const GlobalStyles = createGlobalStyle`
+  blockquote {
+    background-Color: black;
+    padding: 5px;
+    border-radius: 4px;
+    color: white;
+  }
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledBody>
+      <GlobalStyles/>
+      <Router>
+        <Header/>
+        <Routes>
+          <Route exact path="/ask" element={<AskPage/>} />
+          <Route exact path="/" element={<QuestionsPage/>} />
+          <Route exact path="/question" element={<QuestionAnswerPage/>} />
+        </Routes>
+      </Router>
+    </StyledBody>
   );
 }
 
