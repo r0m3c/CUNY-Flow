@@ -18,8 +18,6 @@ const AnswerButton = styled(Link)`
     justify-content: center;
     align-items: center;
     display: flex;
-    
-
 `
 
 function QuestionsPage() {
