@@ -10,6 +10,7 @@ import {
 import AskPage from "./Pages/AskPage";
 import { createGlobalStyle } from "styled-components";
 import QuestionAnswerPage from "./Pages/QuestionAnswerPage";
+import Footer from "./Components/Footer";
 
 const StyledBody = styled.div`
   background-color: #92bfdf;
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/" element={<QuestionsPage/>} />
           <Route exact path="/question" element={<QuestionAnswerPage/>} />
         </Routes>
+        <Footer/>
       </Router>
     </StyledBody>
   );
