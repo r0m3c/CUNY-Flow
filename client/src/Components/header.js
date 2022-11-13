@@ -70,7 +70,8 @@ const StyledNavBarLinksA = styled(Link)`
     color: white;
 `
 
-const StyledNavBarLinks2 = styled.a`
+const StyledNavBarLinks2 = styled(Link
+)`
     text-decoration: none;
     color: black;
     padding: 1rem;
@@ -112,7 +113,7 @@ function Header() {
                     <StyledNavBarLinksUL>
                         <StyledNavBarLinksLI><StyledNavBarLinksA to={"/"} className="navbar-links-a" href="df">Home</StyledNavBarLinksA></StyledNavBarLinksLI>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <StyledNavBarLinksLI><StyledNavBarLinks2 className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI>
+                        <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI>
                     </StyledNavBarLinksUL>
                 </StyledNavBarLinks>
             </StyledNav>
