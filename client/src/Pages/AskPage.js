@@ -100,7 +100,7 @@ function AskPage() {
             </PreviewDiv>
 
             <ButtonDiv>
-                <PostAnswerButton>Post Your Answer</PostAnswerButton>
+                <PostAnswerButton>Post Your Question</PostAnswerButton>
             </ButtonDiv>
         </Container>
     );
