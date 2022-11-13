@@ -3,7 +3,7 @@ import QuestionsPage from "./Pages/QuestionsPage";
 import styled from "styled-components";
 import Signup from "./Pages/Signup";
 import Login from "./Pages/Login";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import {
   BrowserRouter as Router,
   Routes,
