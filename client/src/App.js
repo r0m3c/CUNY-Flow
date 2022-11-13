@@ -1,6 +1,9 @@
 import Header from "./Components/header";
 import QuestionsPage from "./Pages/QuestionsPage";
 import styled from "styled-components";
+import Signup from "./Pages/Signup";
+import Login from "./Pages/Login";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Routes,
@@ -34,6 +37,8 @@ function App() {
           <Route exact path="/ask" element={<AskPage/>} />
           <Route exact path="/" element={<QuestionsPage/>} />
           <Route exact path="/question" element={<QuestionAnswerPage/>} />
+          <Route exact path="/signup" element={<Signup/>} />
+          <Route exact path="/login" element={<Login/>} />
         </Routes>
       </Router>
     </StyledBody>
