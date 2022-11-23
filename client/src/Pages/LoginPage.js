@@ -3,6 +3,7 @@ import { Component } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../UserContext";
+import { Navigate } from "react-router-dom";
 
 const Container = styled.div`
     width: 80%;
@@ -51,7 +52,8 @@ class LoginPage extends Component {
         super(props);
         this.state ={
             email:'',
-            password:''
+            password:'',
+            redirectToHomePage: false,
         }
     }
 
@@ -61,12 +63,18 @@ class LoginPage extends Component {
             password: this.state.password,
         }, {withCredentials: true})
             .then(() => {
-                this.context.checkAuth();
+                this.context.checkAuth().then(() => {
+                    this.setState({redirectToHomePage: true});
+                });
             });
     }
 
     render() {
         return (
+            <>
+            {this.state.redirectToHomePage && (
+                <Navigate to={"/"}/>
+            )}
             <Container>
     
                 <MainTitle>Login</MainTitle>
@@ -75,6 +83,7 @@ class LoginPage extends Component {
                 <LoginButton onClick={() => this.login()} >Login</LoginButton>
     
             </Container>
+            </>
         );    
     }
 }
