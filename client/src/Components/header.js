@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from '@fortawesome/fontawesome-free';
 import {Link} from "react-router-dom"
 import cunyflow from "../Images/cunyflow.png"
+import { useContext } from "react";
+import UserContext from "../UserContext";
 
 const StyledNav = styled.nav`
     display: flex;
@@ -89,9 +91,23 @@ const StyledHR = styled.hr`
     height: 15px;
 `
 
+const UserNameLink = styled.a`
+text-decoration: none;
+    color: black;
+    padding: 1rem;
+    display: block;
+    background-color: black; 
+    border-radius: 5rem; 
+    color: white;
+`
+
 const StyledLogoLink = styled(Link)``
 
 function Header() {
+
+    // Using userContext/getting global user variable & then using it in our  nav links below
+    const {user} = useContext(UserContext);
+
     return (
         <header>
             <StyledNav>
@@ -111,9 +127,23 @@ function Header() {
 
                 <StyledNavBarLinks className="navbar-links">
                     <StyledNavBarLinksUL>
-                        <StyledNavBarLinksLI><StyledNavBarLinksA to={"/"} className="navbar-links-a" href="df">Home</StyledNavBarLinksA></StyledNavBarLinksLI>
+                        {user && (
+                            <>
+                            <UserNameLink>{user.email}</UserNameLink>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI>
+                            <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI>
+                            </>
+                        )}
+                        {!user && (
+                            <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Log In</StyledNavBarLinks2></StyledNavBarLinksLI>
+                        )}
+
+                        {/* Previous Code we had for the log in botton and home button */}
+                        {/* <StyledNavBarLinksLI><StyledNavBarLinksA to={"/"} className="navbar-links-a" href="df">Home</StyledNavBarLinksA></StyledNavBarLinksLI> */}
+                            {/* &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI> */}
+                        {/* end of text */}
+                        
                     </StyledNavBarLinksUL>
                 </StyledNavBarLinks>
             </StyledNav>
