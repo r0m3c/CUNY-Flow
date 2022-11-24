@@ -135,7 +135,11 @@ function Header() {
                             </>
                         )}
                         {!user && (
-                            <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Log In</StyledNavBarLinks2></StyledNavBarLinksLI>
+                            <>
+                                <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Log In</StyledNavBarLinks2></StyledNavBarLinksLI>
+                                &nbsp;
+                                <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/register"} className="navbar-links-a" href="sdf">Register</StyledNavBarLinks2></StyledNavBarLinksLI>
+                            </>
                         )}
 
                         {/* Previous Code we had for the log in botton and home button */}

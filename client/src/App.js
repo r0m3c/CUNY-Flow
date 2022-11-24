@@ -20,6 +20,7 @@ import UserContext from "./UserContext";
 import LoginPage from "./Pages/LoginPage";
 // import { response } from "express";
 import { useEffect } from "react";
+import RegisterPage from "./Pages/RegisterPage";
 
 const StyledBody = styled.div`
   background-color: #92bfdf;
@@ -71,7 +72,8 @@ function App() {
             <Route exact path="/ask" element={<AskPage/>} />
             <Route exact path="/" element={<QuestionsPage/>} />
             <Route exact path="/question" element={<QuestionAnswerPage/>} />
-            <Route exact path="/signup" element={<Signup/>} />
+            {/* <Route exact path="/signup" element={<Signup/>} /> */}
+            <Route exact path="/register" element={<RegisterPage/>} />
             <Route exact path="/login" element={<LoginPage/>} />
           </Routes>
           <Footer/>
