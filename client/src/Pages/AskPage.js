@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
 import { useState } from 'react';
+import axios from 'axios';
 
 const QuestionTitle = styled.h3`
     color: white;
@@ -81,27 +82,40 @@ const PreviewArea = styled.div`
 function AskPage() {
 
     const [questionBody, setQuestionBody] = useState("");
+    const [questionTitle, setQuestionTitle] = useState("");
+
+    function sendQuestion(ev) {
+        ev.preventDefault();
+        axios.post('http://localhost:3030/questions', {
+            title: questionTitle, content: questionBody}, {withCredentials: true}
+            )
+            .then(response => console.log(response));
+    }
 
     return (
         <Container>
             <MainTitle>Ask a Public Question</MainTitle>
-            <QuestionTitle>Title</QuestionTitle>
-            <Description>Be specific and imagine you are asking a question to another person</Description>
-            <TitleInput type="text" placeholder="Enter title here" />
 
-            <QuestionTitle>Body</QuestionTitle>
-            <Description>Include all information someone would need to know to answer your question</Description>
-            <BodyTextArea onChange={e => setQuestionBody(e.target.value)} placeholder="Enter question info here"></BodyTextArea>
+            {/* Note: form looks weird because tags are in a form */}
+            <form onSubmit={ev => sendQuestion(ev)}>
+                <QuestionTitle>Title</QuestionTitle>
+                <Description>Be specific and imagine you are asking a question to another person</Description>
+                <TitleInput value={questionTitle} onChange={e => setQuestionTitle(e.target.value)} type="text" placeholder="Enter title here" />
 
-            <PreviewDiv>
-                <PreviewArea>
-                    <ReactMarkdown plugins={"df"} children={questionBody} />
-                </PreviewArea>
-            </PreviewDiv>
+                <QuestionTitle>Body</QuestionTitle>
+                <Description>Include all information someone would need to know to answer your question</Description>
+                <BodyTextArea value={questionBody} onChange={e => setQuestionBody(e.target.value)} type="text" placeholder="Enter question info here"></BodyTextArea>
 
-            <ButtonDiv>
-                <PostAnswerButton>Post Your Question</PostAnswerButton>
-            </ButtonDiv>
+                <PreviewDiv>
+                    <PreviewArea>
+                        <ReactMarkdown plugins={[remarkGfm]} children={questionBody} />
+                    </PreviewArea>
+                </PreviewDiv>
+
+                <ButtonDiv>
+                    <PostAnswerButton type={'submit'}>Post Your Question</PostAnswerButton>
+                </ButtonDiv>
+            </form>
         </Container>
     );
 }
