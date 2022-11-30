@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
 import { useState } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 
 const QuestionTitle = styled.h3`
     color: white;
@@ -83,17 +84,25 @@ function AskPage() {
 
     const [questionBody, setQuestionBody] = useState("");
     const [questionTitle, setQuestionTitle] = useState("");
+    const [redirect, setRedirect] = useState(false);
 
     function sendQuestion(ev) {
         ev.preventDefault();
         axios.post('http://localhost:3030/questions', {
             title: questionTitle, content: questionBody}, {withCredentials: true}
             )
-            .then(response => console.log(response));
+            .then(response => {
+                // console.log(response.data);
+                setRedirect('/question/'+response.data[0]);
+            });
     }
 
     return (
         <Container>
+            {redirect && (
+                <Navigate to={redirect} />
+            )}
+
             <MainTitle>Ask a Public Question</MainTitle>
 
             {/* Note: form looks weird because tags are in a form */}

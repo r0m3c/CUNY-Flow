@@ -55,9 +55,7 @@ function App() {
   }
 
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
+  useEffect(() => {checkAuth()}, []);
   //
 
   return (
@@ -71,7 +69,7 @@ function App() {
           <Routes>
             <Route exact path="/ask" element={<AskPage/>} />
             <Route exact path="/" element={<QuestionsPage/>} />
-            <Route exact path="/question" element={<QuestionAnswerPage/>} />
+            <Route exact path="/question/:id" element={<QuestionAnswerPage/>} />
             {/* <Route exact path="/signup" element={<Signup/>} /> */}
             <Route exact path="/register" element={<RegisterPage/>} />
             <Route exact path="/login" element={<LoginPage/>} />

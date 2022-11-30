@@ -5,7 +5,9 @@ import AnswerRow from "../Components/AnswerRow";
 import {Link} from 'react-router-dom';
 import ReactMarkdown from "react-markdown"
 import remarkGfm from 'remark-gfm'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 
 const AnswerButton = styled(Link)`
     background-color: #09062C;
@@ -282,6 +284,18 @@ const AnswerTitle = styled.h1`
 
 
 function QuestionAnswerPage() {
+  const {id} = useParams();
+  const [question,setQuestion] = useState(false);
+  
+  function fetchQuestion() {
+    axios.get('http://localhost:3030/question/'+id)
+      .then(response => {
+        setQuestion(response.data);
+      });
+  }
+
+  useEffect(() => fetchQuestion(), []);
+
   const [questionBody, setQuestionBody] = useState("");
 
 
@@ -293,7 +307,9 @@ function QuestionAnswerPage() {
 
       <Container>
         <QuestionTitle>
-          <h1>How do Pointer work in C++</h1>
+          {question && (
+            <h1>{question.title}</h1>
+          )}
         </QuestionTitle>
 
         <InnerContainer>
@@ -325,9 +341,7 @@ function QuestionAnswerPage() {
               <InnerContainer5>
                 <InnerContainer5TitleSection>
                   <InnterContainer5Question>
-                    Hello, I currently go to john jay college (freshmen here). I am having trouble understanding how
-                    pointers work in c++. Specifically, I don’t understand how referencing an objects address can be
-                    stored in a pointer.
+                  <ReactMarkdown plugins={[remarkGfm]} children={question.content} />
                     {/* <br><br> */}
                   </InnterContainer5Question>
                 </InnerContainer5TitleSection>
