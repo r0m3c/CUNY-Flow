@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import UserContext from "../UserContext";
 import { Navigate } from "react-router-dom";
+import ErrorBox from "../Components/ErrorBox";
 
 const Container = styled.div`
     width: 80%;
@@ -53,6 +54,8 @@ class RegisterPage extends Component {
         this.state ={
             email:'',
             password:'',
+            redirectToHomePage:false,
+            error: false,
         }
     }
 
@@ -62,16 +65,28 @@ class RegisterPage extends Component {
             password: this.state.password,
         }, {withCredentials: true})
             .then(() => {
-                
+                this.context.checkAuth()
+                    .then(() => this.setState({redirectToHomePage:true}));
+            })
+            .catch(() => {
+                this.setState({error:true});
             });
     }
 
     render() {
         return (
             <>
+
+            {this.state.redirectToHomePage && (
+                <Navigate to={"/"} />
+            )}
+
             <Container>
     
                 <MainTitle>Register</MainTitle>
+                {this.state.error && (
+                    <ErrorBox>Registration Failed</ErrorBox>
+                )}
                 <TitleInput placeholder={"email"} type="email" value={this.state.email} onChange={ev => this.setState({email:ev.target.value})} />
                 <TitleInput placeholder={"password"} type="password" value={this.state.password} onChange={ev => this.setState({password:ev.target.value})} />
                 <LoginButton onClick={() => this.register()} >Register</LoginButton>

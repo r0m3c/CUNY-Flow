@@ -5,6 +5,9 @@ import {Link} from "react-router-dom"
 import cunyflow from "../Images/cunyflow.png"
 import { useContext } from "react";
 import UserContext from "../UserContext";
+import axios from "axios";
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const StyledNav = styled.nav`
     display: flex;
@@ -83,6 +86,16 @@ const StyledNavBarLinks2 = styled(Link
     color: white;
 `
 
+const StyledNavBarLinkButton = styled.button`
+        text-decoration: none;
+        color: black;
+        padding: 1rem;
+        display: block;
+        background-color:  #1B3B89; 
+        border-radius: 5rem; 
+        color: white;
+    `
+
 const StyledHR = styled.hr`
     border-bottom: 1px  black;
     /* box-shadow: 0 20px 20px -20px #333; */
@@ -108,8 +121,21 @@ function Header() {
     // Using userContext/getting global user variable & then using it in our  nav links below
     const {user} = useContext(UserContext);
 
+    const {checkAuth} = useContext(UserContext);
+    const [redirectToHomePage,setRedirectToTheHomePage] = useState(false);
+
+    function logout() {
+        axios.post('http://localhost:3030/logout', {}, {withCredentials:true})
+            .then(() => {
+                checkAuth().catch(() => setRedirectToTheHomePage(true));
+            })
+    }
+
     return (
         <header>
+            {redirectToHomePage && (
+                                <Navigate to={"/"} />
+                            )}
             <StyledNav>
                 <StyledNavTitle className="brand-title">
                     <StyledLogoLink to={"/"}>
@@ -131,7 +157,12 @@ function Header() {
                             <>
                             <UserNameLink>{user.email}</UserNameLink>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <StyledNavBarLinksLI><StyledNavBarLinks2 to = {"/login"} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinks2></StyledNavBarLinksLI>
+
+                            {/* {redirectToHomePage && (
+                                <Navigate to={"/"} />
+                            )} */}
+
+                            <StyledNavBarLinksLI><StyledNavBarLinkButton onClick={() => logout()} className="navbar-links-a" href="sdf">Sign out</StyledNavBarLinkButton></StyledNavBarLinksLI>
                             </>
                         )}
                         {!user && (
