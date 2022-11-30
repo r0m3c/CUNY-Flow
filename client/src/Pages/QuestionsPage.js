@@ -2,6 +2,8 @@ import styled from "styled-components";
 import QuestionRow from "../Components/QuestionRow";
 import "../Styles/QuestionsPage.css"
 import {Link} from 'react-router-dom';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const AnswerButton = styled(Link)`
     background-color: #09062C;
@@ -21,6 +23,16 @@ const AnswerButton = styled(Link)`
 `
 
 function QuestionsPage() {
+
+    const [questions,setQuestions] = useState([]);
+
+    function fetchQuestions() {
+        axios.get('http://localhost:3030/question', {withCredentials:true})
+            .then(response => setQuestions(response.data));
+    }
+
+    useEffect(() => fetchQuestions(), []);
+
     return(
         <main>
             <div className="AnswerButtonDiv">
@@ -29,11 +41,9 @@ function QuestionsPage() {
 
             <h1 className="header">Questions</h1>
 
-            <QuestionRow></QuestionRow>
-            <QuestionRow></QuestionRow>
-            <QuestionRow></QuestionRow>
-            <QuestionRow></QuestionRow>
-            <QuestionRow></QuestionRow>
+            {questions && questions.length > 0 && questions.map(question => (
+                <QuestionRow title={question.title} id={question.id} />
+            ))}
         </main>
 
     );

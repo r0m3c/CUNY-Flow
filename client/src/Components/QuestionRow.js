@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Link} from 'react-router-dom';
+import PropTypes from "prop-types";
 
 export const QuestionContainer = styled.div`
     width: 80%;
@@ -60,7 +61,7 @@ const UserLink = styled.a`
     // float: right;
 `
 
-function QuestionRow() {
+function QuestionRow({title,id}) {
     return(
 
         <>
@@ -68,7 +69,7 @@ function QuestionRow() {
                 <QuestionStat>0 <span>votes</span></QuestionStat>
                 <QuestionStat>1 <span>answer(s)</span></QuestionStat>
                 <QuestionTitleArea>
-                    <QuestionLink to={"/question"}>Why is C++ so hard?</QuestionLink>
+                    <QuestionLink to={"/question/"+id}>{title}</QuestionLink>
                     <QuestionsUserAsked>
                         Asked 1 hour ago by <UserLink>r0m3c</UserLink>
                     </QuestionsUserAsked>
@@ -77,6 +78,11 @@ function QuestionRow() {
         </>
 
     );
+}
+
+QuestionRow.prototypes = {
+    title:PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 }
 
 export default QuestionRow;
