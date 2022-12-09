@@ -8,6 +8,7 @@ import remarkGfm from 'remark-gfm'
 import { useState,useEffect } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import VotingButtons from "../Components/VotingButtons";
 
 const AnswerButton = styled(Link)`
     background-color: #09062C;
@@ -87,37 +88,37 @@ const InnerContainerInside4 = styled.div`
   margin: -2px;
 `
 
-const InnerContainer4Button1 = styled.button`
-  background: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  font: inherit;
-  outline: none;
-  padding: 0;
-  text-align: center;
-  text-decoration: none;
-`
+// const InnerContainer4Button1 = styled.button`
+//   background: none;
+//   border: none;
+//   border-radius: 0;
+//   box-shadow: none;
+//   font: inherit;
+//   outline: none;
+//   padding: 0;
+//   text-align: center;
+//   text-decoration: none;
+// `
 
-const InnerContainer4Number = styled.div`
-  align-items: center;
-  color: #6a737c;
-  display: flex;
-  font-size: 21px;
-  justify-content: center;
-`
+// const InnerContainer4Number = styled.div`
+//   align-items: center;
+//   color: #6a737c;
+//   display: flex;
+//   font-size: 21px;
+//   justify-content: center;
+// `
 
-const InnerContainer4Button2 = styled.button`
-  background: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
-  font: inherit;
-  outline: none;
-  padding: 0;
-  text-align: center;
-  text-decoration: none;
-`
+// const InnerContainer4Button2 = styled.button`
+//   background: none;
+//   border: none;
+//   border-radius: 0;
+//   box-shadow: none;
+//   font: inherit;
+//   outline: none;
+//   padding: 0;
+//   text-align: center;
+//   text-decoration: none;
+// `
 
 const InnerContainer5 = styled.div`
   display: flex;
@@ -286,18 +287,33 @@ const AnswerTitle = styled.h1`
 function QuestionAnswerPage() {
   const {id} = useParams();
   const [question,setQuestion] = useState(false);
+  const [voteCount,setVoteCount] = useState(0);
+  const [userVote,setUserVote] = useState(0);
+  const [questionBody, setQuestionBody] = useState("");
   
   function fetchQuestion() {
-    axios.get('http://localhost:3030/question/'+id)
+    axios.get('http://localhost:3030/question/'+id, {withCredentials:true})
       .then(response => {
-        setQuestion(response.data);
+        setQuestion(response.data.question);
+        // const voteSum = response.data.question.vote_sum;
+        // setVoteCount(voteSum === null ? 0 : voteSum);
+        // setUserVote(response.data.question.user_vote)
       });
   }
 
+  function handleArrowUpClick() {
+    setUserVote(userVote === 1 ? 0 : 1);
+    axios.post('http://localhost:3030/vote/up/'+question.id, {}, {withCredentials:true})
+      .then(response => setVoteCount(response.data))
+  }
+
+  function handleArrowDownClick() {
+    setUserVote(userVote === -1 ? 0 : -1);
+    axios.post('http://localhost:3030/vote/down/'+question.id, {}, {withCredentials:true})
+      .then(response => setVoteCount(response.data))
+  }
+
   useEffect(() => fetchQuestion(), []);
-
-  const [questionBody, setQuestionBody] = useState("");
-
 
   return (
     <>
@@ -317,24 +333,7 @@ function QuestionAnswerPage() {
             <InnerContainer3>
               <InnerContainer4>
                 <InnerContainerInside4>
-                  <InnerContainer4Button1>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 36 36"
-                      class="icon">
-                      <path fill="#697075" d="M2 26H34L18 10L2 26Z"></path>
-                    </svg>
-                  </InnerContainer4Button1>
-
-                  <InnerContainer4Number>
-                    2
-                  </InnerContainer4Number>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" viewBox="0 0 36 36"
-                      class="icon">
-                      <path fill="#697075" d="M2 10H34L18 26L2 10Z"></path>
-                    </svg>
-                  <InnerContainer4Button2>
-
-                  </InnerContainer4Button2>
+                  <VotingButtons userVote={userVote} total={voteCount} onArrowUpClick={() => handleArrowUpClick()} onArrowDownClick={() => handleArrowDownClick()} />
                 </InnerContainerInside4>
               </InnerContainer4>
 
@@ -371,7 +370,7 @@ function QuestionAnswerPage() {
 
                           <InnerContainer5UserNameSection>
                             <InnerContainer5UserNameLink>
-                              r0m3c
+                              {question.email}
                             </InnerContainer5UserNameLink>
                           </InnerContainer5UserNameSection>
                         </InnerContainer5InnerUserSection>
