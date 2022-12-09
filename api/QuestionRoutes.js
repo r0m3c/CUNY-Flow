@@ -30,17 +30,20 @@ QuestionRoutes.post('/questions', (req,res) => {
 QuestionRoutes.get('/question/:id', (req,res) => {
     const id = req.params.id;
     getLoggedInUser(req.cookies.token).then(user => {
-        db.select('posts.*',db.raw('votes2.vote as user_vote'),db.raw('sum(votes.vote) as vote_sum'))
+        db.select('posts.*',
+        // db.raw('votes2.vote as user_vote'),
+        // db.raw('sum(votes.vote) as vote_sum'),
+        )
         .from('posts')
-        .join('users', 'users.id', '=', 'posts.author_id') // added
-        .leftJoin(db.raw('votes vote2 on votes2.post_id = posts.id and votes2.user_id = '+user.id))
-        .leftJoin('votes','posts.id','=','votes.post_id')
+        .join('users', 'users.id', '=', 'posts.author_id')
+        // .leftJoin('votes', 'posts.id', '=', 'votes.post_id')
+        // .leftJoin(db.raw('votes votes2 on votes2.post_id = posts.id and votes2.user_id = '+user.id))
         // .where({id})
         .where({'posts.id':id}) //added
         .groupBy('posts.id')
         .first()
         .then(question => {
-            res.json(question).send();
+            res.json({question}).send();
         })
         .catch(() => res.status(422).send());
     });

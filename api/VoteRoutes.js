@@ -28,38 +28,38 @@ VoteRoutes.post('/vote/:direction/:postId', (req,res) => {
                     })
                     .then(() => 
                         getPostTotal(postId)
-                            .then(count => res.json(count).sendStatus(200))
-                            .catch(res.status(422).send())
+                            .then(count => res.json(count).send())
+                            .catch(e => console.log(e) && res.status(422).send())
                     )
-                    .catch(() => res.status(422).send());
+                    .catch(e => console.log(e) && res.status(422).send());
             }
 
             else if(direction === vote.vote) {
                 // delete the vote
-                db('votes')
+                return db('votes')
                     .where({id:vote.id})
                     .del()
                     .then(() =>
                         getPostTotal(postId)
-                            .then(count => res.json(count).sendStatus(200))
-                            .catch(res.status(422).send())
+                            .then(count => res.json(count).send())
+                            .catch(e => console.log(e) && res.status(422).send())
                     )
-                    .catch(() => res.status(422).send());
+                    .catch(e => console.log(e) && res.status(422).send());
             } else {
                 //update the vote
-                db('votes')
+                return db('votes')
                     .where({id:vote.id})
                     .update({vote:direction})
                     .then(() => 
                         getPostTotal(postId)
-                            .then(count => res.json(count).sendStatus(200))
-                            .catch(res.status(422).send())
+                            .then(count => res.json(count).send())
+                            .catch(e => console.log(e) && res.status(422).send())
                     )
-                    .catch(() => res.status(422).send())
+                    .catch(e => console.log(e) && res.status(422).send());
             }
         })
-        .catch(e => {res.status(422).send()})
-    })
+        .catch(e => {res.status(422).send();});
+    });
 });
 
 export default VoteRoutes;
