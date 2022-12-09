@@ -49,15 +49,35 @@ QuestionRoutes.get('/question/:id', (req,res) => {
     });
 });
 
-QuestionRoutes.get('/question', (req,res) => {
-    db.select('*')
-        .from('posts')
-        .where({parent_id:null})
-        .orderBy('id', 'desc')
-        .then(questions => {
-            res.json(questions).send();
-        })
-        .catch(() => res.status(422).send());
-});
+// QuestionRoutes.get('/question', (req,res) => {
+//     db.select('*')
+//         .from('posts')
+//         .where({parent_id:null})
+//         .orderBy('id', 'desc')
+//         .then(questions => {
+//             res.json(questions).send();
+//         })
+//         .catch(() => res.status(422).send());
+// });
+
+QuestionRoutes.get('/question', (req,res) => {  
+    const query = db.select(
+        'posts.*',
+        'users.email',
+        db.raw('users.id as user_id')
+    )
+    .from('posts')
+    .join('users', 'users.id', '=', 'posts.author_id')
+    .where({
+        parent_id: null,
+    })
+    .orderBy('posts.id', 'desc')
+    .groupBy('posts.id');
+    query.then(questions => {
+        res.json(questions).send();
+    })
+    .catch(e => console.log(e) && res.status(422).send());
+
+  });
 
 export default QuestionRoutes;

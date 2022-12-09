@@ -61,7 +61,7 @@ const UserLink = styled.a`
     // float: right;
 `
 
-function QuestionRow({title,id}) {
+function QuestionRow({title,id,author,createdAt}) {
     return(
 
         <>
@@ -71,7 +71,7 @@ function QuestionRow({title,id}) {
                 <QuestionTitleArea>
                     <QuestionLink to={"/question/"+id}>{title}</QuestionLink>
                     <QuestionsUserAsked>
-                        Asked 1 hour ago by <UserLink>r0m3c</UserLink>
+                    asked on {createdAt} by <UserLink>{author.name || author.email}</UserLink>
                     </QuestionsUserAsked>
                 </QuestionTitleArea>
             </QuestionContainer>
@@ -83,6 +83,8 @@ function QuestionRow({title,id}) {
 QuestionRow.prototypes = {
     title:PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
+    author: PropTypes.object,
+    createdAt: PropTypes.string.isRequired,
 }
 
 export default QuestionRow;

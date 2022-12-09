@@ -9,6 +9,7 @@ import { useState,useEffect } from 'react';
 import axios from "axios";
 import { useParams } from 'react-router-dom';
 import VotingButtons from "../Components/VotingButtons";
+import When from "./When";
 
 const AnswerButton = styled(Link)`
     background-color: #09062C;
@@ -359,7 +360,7 @@ function QuestionAnswerPage() {
                       <div>
                         <InnerContainer5InnerUserSection>
                           <InnerContainer5AskedDate>
-                            asked 1 day ago
+                            asked on {question.created_at}
                           </InnerContainer5AskedDate>
 
                           <InnerContainer5ImageSection>
