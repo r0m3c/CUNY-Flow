@@ -30,7 +30,7 @@ QuestionRoutes.post('/questions', (req,res) => {
 QuestionRoutes.get('/question/:id', (req,res) => {
     const id = req.params.id;
     getLoggedInUser(req.cookies.token).then(user => {
-        db.select('posts.*',
+        db.select('posts.*', 'users.email',
         // db.raw('votes2.vote as user_vote'),
         // db.raw('sum(votes.vote) as vote_sum'),
         )
