@@ -42,7 +42,7 @@ function QuestionsPage() {
             <h1 className="header">Questions</h1>
 
             {questions && questions.length > 0 && questions.map(question => (
-                <QuestionRow title={question.title} id={question.id} />
+                <QuestionRow createdAt={question.created_at} title={question.title} id={question.id} author={{id: question.user_id, name:question.name, email:question.email}} />
             ))}
         </main>
 
