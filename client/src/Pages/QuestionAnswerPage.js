@@ -10,6 +10,7 @@ import axios from "axios";
 import { useParams } from 'react-router-dom';
 import VotingButtons from "../Components/VotingButtons";
 import When from "./When";
+import PostBodyTextArea from "../Components/PostBodyTextArea";
 
 const AnswerButton = styled(Link)`
     background-color: #09062C;
@@ -290,7 +291,8 @@ function QuestionAnswerPage() {
   const [question,setQuestion] = useState(false);
   const [voteCount,setVoteCount] = useState(0);
   const [userVote,setUserVote] = useState(0);
-  const [questionBody, setQuestionBody] = useState("");
+  const [answerBody, setAnswerBody] = useState('');
+  const [answers,setAnswers] = useState([]);
   
   function fetchQuestion() {
     axios.get('http://localhost:3030/question/'+id, {withCredentials:true})
@@ -314,7 +316,27 @@ function QuestionAnswerPage() {
       .then(response => setVoteCount(response.data))
   }
 
-  useEffect(() => fetchQuestion(), []);
+  function getAnswers() {
+    axios.post('http://localhost:3030/posts/answers', {withCredentials:true})
+      .then(response => {
+        setAnswers(response.data);
+      });
+  }
+
+  function postAnswer(ev) {
+    ev.preventDefault();
+    const data = {postId:question.id, content:answerBody}
+    axios.post('http://localhost:3030/answers', data, {withCredentials:true})
+      .then(response => {
+        setAnswerBody('');
+        setAnswers(response.data);
+      });
+  }
+
+  useEffect(() => {
+    fetchQuestion();
+    getAnswers();
+  }, []);
 
   return (
     <>
@@ -389,30 +411,36 @@ function QuestionAnswerPage() {
         3 Answer(s)
       </AnswerCountTitle>
 
-      <AnswerRow>
+        {answers.map(answer => (
+          // <AnswerRow>
+            <div>
+              <ReactMarkdown plugins={[remarkGfm]} children={answer.content} />
+            </div>
+          // </AnswerRow>
+        ))}
+
+      {/* <AnswerRow>
       </AnswerRow>
 
       <AnswerRow>
-      </AnswerRow>
-
-      <AnswerRow>
-      </AnswerRow>
+      </AnswerRow> */}
 
       <AnswerTitle>
         Your Answer
       </AnswerTitle>
 
       <ContainerTextAreaAll>
-        <BodyTextArea onChange={e => setQuestionBody(e.target.value)} placeholder="Enter question info here"></BodyTextArea>
+        <PostBodyTextArea value={answerBody} handlePostBodyChange={(value) => setAnswerBody(value)} placeholder={"Insert answer here..."} />
+        {/* <BodyTextArea onChange={e => setQuestionBody(e.target.value)} placeholder="Enter question info here"></BodyTextArea>
 
         <PreviewDiv>
             <PreviewArea>
                 <ReactMarkdown plugins={"df"} children={questionBody} />
             </PreviewArea>
-        </PreviewDiv>
+        </PreviewDiv> */}
 
         <ButtonDiv>
-            <PostAnswerButton>Post Your Answer</PostAnswerButton>
+            <PostAnswerButton onClick={ev => postAnswer(ev)}>Post Your Answer</PostAnswerButton>
         </ButtonDiv>
       </ContainerTextAreaAll>
     </>

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import UserRoutes from "./UserRoutes.js";
 import QuestionRoutes from "./QuestionRoutes.js";
 import VoteRoutes from "./VoteRoutes.js";
+import AnswerRoutes from "./AnswerRoutes.js";
 
 // const app = express();
 // const express = require('express');
@@ -30,6 +31,7 @@ app.get('/', ((req,res) => {
 app.use(UserRoutes);
 app.use(QuestionRoutes);
 app.use(VoteRoutes);
+app.use(AnswerRoutes);
 
 app.listen(port, ()=> {
     console.log("listening on port:"+port);

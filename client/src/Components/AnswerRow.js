@@ -205,7 +205,7 @@ function AnswerRow() {
 
                         <RowInnerUserSection>
                             <RowInnterUserSectionAnswer>
-                                Pointers are used in C++++++++++!!!
+                                {/* Pointers are used in C++++++++++!!! */}
                             </RowInnterUserSectionAnswer>
 
                             <RowInnerUserSectionMain>
