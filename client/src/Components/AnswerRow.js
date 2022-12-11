@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import ReactMarkdown from "react-markdown"
+import remarkGfm from 'remark-gfm'
 
 const RowContainer = styled.div`
     width: 80%;
@@ -173,7 +176,7 @@ const RowInnerUserSectionUserName = styled.a`
     text-decoration: none;
 `
 
-function AnswerRow() {
+function AnswerRow(props) {
     return (
         <RowContainer>
             <RowInnerContainer>
@@ -206,6 +209,8 @@ function AnswerRow() {
                         <RowInnerUserSection>
                             <RowInnterUserSectionAnswer>
                                 {/* Pointers are used in C++++++++++!!! */}
+                                <ReactMarkdown plugins={[remarkGfm]} children={props.question} />
+                                
                             </RowInnterUserSectionAnswer>
 
                             <RowInnerUserSectionMain>
@@ -220,7 +225,7 @@ function AnswerRow() {
                                 <RowInnerUserInnerMainSection>
                                     <RowInnerUserInnerInnerMainSection>
                                         <RowInnerUserDayAnswered>
-                                            answered 1 day ago
+                                            answered on {props.createdAt}
                                         </RowInnerUserDayAnswered>
 
                                         <RowInnerUserSectionImageSection>
@@ -229,7 +234,7 @@ function AnswerRow() {
 
                                         <RowInnerUserSectionUserNameSection>
                                             <RowInnerUserSectionUserName>
-                                                gl4d1ator
+                                                {props.email}
                                             </RowInnerUserSectionUserName>
                                         </RowInnerUserSectionUserNameSection>
                                     </RowInnerUserInnerInnerMainSection>
@@ -242,5 +247,12 @@ function AnswerRow() {
         </RowContainer>
     );
 }
+
+AnswerRow.prototypes = {
+    email:PropTypes.string.isRequired,
+    question:PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+};
+
 
 export default AnswerRow;

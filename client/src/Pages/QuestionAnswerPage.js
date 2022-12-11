@@ -317,7 +317,7 @@ function QuestionAnswerPage() {
   }
 
   function getAnswers() {
-    axios.post('http://localhost:3030/posts/answers', {withCredentials:true})
+    axios.get('http://localhost:3030/posts/answers/'+id, {withCredentials:true})
       .then(response => {
         setAnswers(response.data);
       });
@@ -330,7 +330,8 @@ function QuestionAnswerPage() {
       .then(response => {
         setAnswerBody('');
         setAnswers(response.data);
-      });
+      })
+      .catch(e => {console.log(e);});
   }
 
   useEffect(() => {
@@ -412,11 +413,7 @@ function QuestionAnswerPage() {
       </AnswerCountTitle>
 
         {answers.map(answer => (
-          // <AnswerRow>
-            <div>
-              <ReactMarkdown plugins={[remarkGfm]} children={answer.content} />
-            </div>
-          // </AnswerRow>
+          <AnswerRow question= {answer.content} email={answer.email} createdAt={answer.created_at} />
         ))}
 
       {/* <AnswerRow>
