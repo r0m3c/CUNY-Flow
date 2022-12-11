@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import ErrorBox from "../Components/ErrorBox";
 
 const Container = styled.div`
-    width: 80%;
+    width: 30%;
     margin: 40px auto;
     position: relative;
     overflow: hidden;
@@ -22,6 +22,7 @@ const Container = styled.div`
     padding-left: 1%; 
     padding-right: 1%;
     display: grid;
+    justify-content: center;
 `;
 
 const TitleInput = styled.input `
@@ -30,6 +31,7 @@ const TitleInput = styled.input `
 `;
 
 const MainTitle = styled.h2`
+    text-align: center;
 `;
 
 const LoginButton = styled.button`
@@ -75,6 +77,15 @@ class LoginPage extends Component {
     render() {
         return (
             <>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             {this.state.redirectToHomePage && (
                 <Navigate to={"/"}/>
             )}
@@ -88,8 +99,17 @@ class LoginPage extends Component {
                 <TitleInput placeholder={"email"} type="email" value={this.state.email} onChange={ev => this.setState({email:ev.target.value})} />
                 <TitleInput placeholder={"password"} type="password" value={this.state.password} onChange={ev => this.setState({password:ev.target.value})} />
                 <LoginButton onClick={() => this.login()} >Login</LoginButton>
-    
+                
             </Container>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             </>
         );    
     }

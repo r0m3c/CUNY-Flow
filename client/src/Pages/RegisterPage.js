@@ -7,7 +7,7 @@ import { Navigate } from "react-router-dom";
 import ErrorBox from "../Components/ErrorBox";
 
 const Container = styled.div`
-    width: 80%;
+    width: 30%;
     margin: 40px auto;
     position: relative;
     overflow: hidden;
@@ -22,6 +22,7 @@ const Container = styled.div`
     padding-left: 1%; 
     padding-right: 1%;
     display: grid;
+    justify-content: center;
 `;
 
 const TitleInput = styled.input `
@@ -30,6 +31,7 @@ const TitleInput = styled.input `
 `;
 
 const MainTitle = styled.h2`
+    text-align: center;
 `;
 
 const LoginButton = styled.button`
@@ -76,7 +78,15 @@ class RegisterPage extends Component {
     render() {
         return (
             <>
-
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             {this.state.redirectToHomePage && (
                 <Navigate to={"/"} />
             )}
@@ -92,6 +102,15 @@ class RegisterPage extends Component {
                 <LoginButton onClick={() => this.register()} >Register</LoginButton>
     
             </Container>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
             </>
         );    
     }

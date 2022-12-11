@@ -409,7 +409,7 @@ function QuestionAnswerPage() {
       </Container>
 
       <AnswerCountTitle>
-        3 Answer(s)
+        Answer(s)
       </AnswerCountTitle>
 
         {answers.map(answer => (
