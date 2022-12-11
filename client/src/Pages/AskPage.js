@@ -11,7 +11,7 @@ const QuestionTitle = styled.h3`
 `
 
 const TitleInput = styled.input `
-    // width: 100%;
+    width: 50%;
     padding: 10px;
 `;
 const Description = styled.p`
@@ -39,6 +39,7 @@ const Container = styled.div`
 const BodyTextArea = styled.textarea`
     padding: 10px;
     min-height: 200px;
+    width: 70%;
 `;
 
 const MainTitle = styled.h2`
@@ -113,7 +114,7 @@ function AskPage() {
 
                 <QuestionTitle>Body</QuestionTitle>
                 <Description>Include all information someone would need to know to answer your question</Description>
-                <BodyTextArea value={questionBody} onChange={e => setQuestionBody(e.target.value)} type="text" placeholder="Enter question info here"></BodyTextArea>
+                <BodyTextArea value={questionBody} onChange={e => setQuestionBody(e.target.value)} type="text" placeholder="Enter question info here (markdown works on here,too)"></BodyTextArea>
 
                 <PreviewDiv>
                     <PreviewArea>

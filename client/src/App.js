@@ -1,8 +1,6 @@
 import Header from "./Components/header";
 import QuestionsPage from "./Pages/QuestionsPage";
 import styled from "styled-components";
-import Signup from "./Pages/Signup";
-import Login from "./Pages/Login";
 import {useState} from "react";
 import axios from "axios";
 
@@ -28,7 +26,7 @@ const StyledBody = styled.div`
 
 const GlobalStyles = createGlobalStyle`
   blockquote {
-    background-Color: black;
+    background-Color: #7393B3;
     padding: 5px;
     border-radius: 4px;
     color: white;
